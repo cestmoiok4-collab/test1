@@ -1,0 +1,216 @@
+<!doctype html>
+<html lang="ar">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Robux Generator — Demo</title>
+
+<!-- خط مجاني من Google (اختياري) -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --bg:#0f1112;
+    --card:#151617;
+    --accent:#00b06f;
+    --muted:#b7b1b1;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    min-height:100vh;
+    font-family:"Poppins",system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;
+    background:linear-gradient(180deg,#0b0c0d 0%,#111213 100%);
+    color:#fff;
+  }
+  .navbar{
+    height:72px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:12px 20px;
+    background:rgba(0,0,0,.25);
+    backdrop-filter: blur(2px);
+  }
+  .brand{display:flex;align-items:center;gap:12px}
+  .brand img{width:46px;height:46px;border-radius:8px;object-fit:cover}
+  .brand .title{font-weight:600}
+  .btn-ghost{
+    background:var(--accent);
+    border:none;color:#fff;padding:10px 18px;border-radius:8px;cursor:pointer;font-weight:600
+  }
+
+  .stage{
+    max-width:720px;margin:40px auto;padding:28px;border-radius:10px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.06));
+    box-shadow:0 8px 30px rgba(0,0,0,.6);
+  }
+
+  .head{ text-align:center;margin-bottom:12px }
+  .head h2{ margin:0;font-size:20px }
+  .head p{ color:var(--muted); margin:8px 0 0 }
+
+  .card{ background:var(--card); padding:18px;border-radius:10px;margin-top:16px;text-align:center }
+  input[type="text"]{
+    width:92%;padding:12px;border-radius:8px;border:1px solid rgba(255,255,255,.06);background:#000;color:#fff;font-size:15px;
+    outline:none;margin-top:12px
+  }
+  .actions{ margin-top:16px; display:flex;gap:10px;justify-content:center;flex-wrap:wrap }
+  .btn{ background:var(--accent);border:none;padding:12px 22px;border-radius:8px;color:#fff;cursor:pointer;font-weight:600 }
+  .btn.secondary{ background:transparent;border:1px solid rgba(255,255,255,.06) }
+
+  .options{ display:none; margin-top:16px; text-align:left }
+  .option-row{ display:flex;align-items:center;justify-content:space-between;padding:12px;border-radius:8px;border:1px solid rgba(255,255,255,.03); margin-bottom:10px }
+  .option-row .left{display:flex;align-items:center;gap:10px}
+  .muted{ color:var(--muted); font-size:14px }
+
+  .locker-area{ margin-top:18px; text-align:center; }
+  /* loader */
+  .loader{ width:64px;height:64px;border-radius:50%;border:6px solid rgba(255,255,255,.06);border-top-color:var(--accent);margin:14px auto;animation:spin 1s linear infinite }
+  @keyframes spin{to{transform:rotate(360deg)}}
+
+  footer{ text-align:center;color:var(--muted);font-size:13px;margin-top:26px;padding:12px 0 }
+  @media (max-width:520px){
+    .stage{ margin:20px; padding:16px }
+    input[type="text"]{ width:100% }
+  }
+</style>
+</head>
+<body>
+
+  <header class="navbar">
+    <div class="brand">
+      <img src="https://d39fkvblvwpxa1.cloudfront.net/uploads/16649140404249d616d649baaf9da11aa8f051c07c.png" alt="logo">
+      <div class="title">Sofiatata26 • Partners</div>
+    </div>
+    <button class="btn-ghost" id="howBtn">How it works?</button>
+  </header>
+
+  <main class="stage" role="main">
+    <div class="head">
+      <h2>احصل على Robux — مثال تجريبي</h2>
+      <p class="muted">أدخل اسم المستخدم ثم اتبع الخطوات. هذه صفحة للتجربة — لا تحويل حقيقي بدون عرض CPA.</p>
+    </div>
+
+    <div class="card" id="step1">
+      <div class="muted">أدخل اسم مستخدم Roblox</div>
+      <input id="username" type="text" placeholder="اكتب اسم المستخدم هنا">
+      <div class="actions">
+        <button id="continueBtn" class="btn">Continue</button>
+        <button id="demoBtn" class="btn secondary">Demo (no action)</button>
+      </div>
+    </div>
+
+    <div class="card" id="loading" style="display:none">
+      <div class="loader" aria-hidden="true"></div>
+      <div class="muted" id="loadingText">جاري البحث عن المستخدم...</div>
+    </div>
+
+    <div class="card" id="step2" style="display:none">
+      <div class="muted">اختر كمية Robux</div>
+      <div class="options">
+        <div class="option-row">
+          <div class="left"><strong>1,700</strong><div class="muted" style="margin-left:8px">Small pack</div></div>
+          <div>$0.00</div>
+        </div>
+        <div class="option-row">
+          <div class="left"><strong>4,500</strong><div class="muted" style="margin-left:8px">Medium pack</div></div>
+          <div>$0.00</div>
+        </div>
+        <div class="option-row">
+          <div class="left"><strong>10,000</strong><div class="muted" style="margin-left:8px">Large pack</div></div>
+          <div>$0.00</div>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button id="selectBtn" class="btn">Select & Verify</button>
+        <button id="backBtn" class="btn secondary">Back</button>
+      </div>
+    </div>
+
+    <div class="card" id="verify" style="display:none">
+      <div class="muted">التحقق النهائي — اضغط Verify لإكمال المهمة</div>
+
+      <!-- ===========================
+           هنا تضع كود الـ Content Locker من CPAGrip
+           لاحقاً: ألصق كود الـ embed بالـ div الآتي
+           مثال: <div id="locker-container">[CPAGRIP EMBED HERE]</div>
+           =========================== -->
+      <div id="locker-container" class="locker-area" style="margin-top:14px;">
+        <!-- PLACE CPAGRIP CONTENT LOCKER EMBED CODE HERE -->
+        <button id="placeholderVerify" class="btn">Verify (placeholder)</button>
+      </div>
+
+      <div style="margin-top:10px" class="muted">ملاحظة: الصندوق أعلاه يجب أن يحتوي كود الـ Content Locker من CPAGrip.</div>
+    </div>
+
+  </main>
+
+  <footer>
+    © 2025 — صفحة تجريبية. لا تدخل كلمات مرور أو بيانات حساسة.
+  </footer>
+
+<script>
+/*
+  سكربت نظيف، لا ينقل بيانات لأي سيرفر. كل شيء محلي.
+  أين تضع كود CPAGrip: داخل العنصر #locker-container
+*/
+
+(function(){
+  const continueBtn = document.getElementById('continueBtn');
+  const demoBtn = document.getElementById('demoBtn');
+  const backBtn = document.getElementById('backBtn');
+  const selectBtn = document.getElementById('selectBtn');
+  const placeholderVerify = document.getElementById('placeholderVerify');
+
+  const step1 = document.getElementById('step1');
+  const loading = document.getElementById('loading');
+  const step2 = document.getElementById('step2');
+  const verify = document.getElementById('verify');
+  const usernameEl = document.getElementById('username');
+  const loadingText = document.getElementById('loadingText');
+  const optionsBlock = document.querySelector('.options');
+
+  document.getElementById('howBtn').addEventListener('click', function(){
+    alert('1) أدخل اسمك\n2) اختَر كمية\n3) اضغط Verify ثم أكمل المهمة في الـ Content Locker.');
+  });
+
+  continueBtn.addEventListener('click', function(){
+    const name = usernameEl.value.trim();
+    if(name.length < 3){ alert('ادخل اسم صحيح'); return; }
+    step1.style.display = 'none';
+    loading.style.display = 'block';
+    loadingText.textContent = `Searching for ${name}...`;
+    // تمثيل بصري فقط: بعد 2.5 ثانية ننتقل للخطوة التالية
+    setTimeout(function(){
+      loading.style.display = 'none';
+      step2.style.display = 'block';
+      optionsBlock.style.display = 'block';
+    }, 2500);
+  });
+
+  demoBtn.addEventListener('click', function(){
+    alert('This is demo mode — no tracking.');
+  });
+
+  backBtn.addEventListener('click', function(){
+    step2.style.display = 'none';
+    step1.style.display = 'block';
+  });
+
+  selectBtn.addEventListener('click', function(){
+    step2.style.display = 'none';
+    verify.style.display = 'block';
+    // هنا يمكنك إظهار أو تحميل Locker عمليًا
+  });
+
+  // زر placeholder فقط للاختبار — لا يقوم بإرسال شيء
+  placeholderVerify.addEventListener('click', function(){
+    alert('هذا زر اختبار فقط. استبدله بكود الـ Content Locker من CPAGrip داخل #locker-container');
+  });
+
+})();
+</script>
+
+</body>
+</html>
